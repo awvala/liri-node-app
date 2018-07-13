@@ -1,17 +1,17 @@
-//require("dotenv").config();
+require("dotenv").config();
 
 var keys = require("./keys.js");
-var twitter = require('twitter');
+var Twitter = require('twitter');
 //var spotify = new Spotify(keys.spotify);
-var client = new twitter(keys.twitter);
+var client = new Twitter(keys.twitter);
 
-var command = process.argv;
-var liriCommand = command[2];
-var liriArgument = command[3];
+//var command = process.argv;
+//var liriCommand = command[2];
+//var liriArgument = command[3];
 
 function getTweets() {
 var Tparams = {
-    screen_name: 'LiriTest718',
+    screen_name: 'LiriTest7181',
     count: 20,
   }
 
@@ -20,8 +20,8 @@ client.get('statuses/user_timeline', Tparams , function (err, tweet, result) {
     if (err) {
         console.log(err);
     } else {
-        for (var i = 0; i <tweets.length; i ++) {
-            console.log("Created: " + tweet[i].created_at + "\n" + "Brilliant Observation:  " + tweet[i].text + "\n");
+        for (var i = 0; i <tweet.length; i ++) {
+            console.log("\n" + "Created: " + tweet[i].created_at + "\n" + "Brilliant Observation:  " + tweet[i].text);
             console.log("==============");
         }
     }
@@ -29,5 +29,3 @@ client.get('statuses/user_timeline', Tparams , function (err, tweet, result) {
 }
 
 getTweets();
-
-
