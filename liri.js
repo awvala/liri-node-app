@@ -30,6 +30,7 @@ function getTweets() {
             for (var i = 0; i <tweet.length; i ++) {
                 var tweetData = ("\n" + "Created: " + tweet[i].created_at + "\n" + "Brilliant Observation:  " + tweet[i].text + "\n" + spacer);
                 console.log(tweetData);
+                appendLog(tweetData);
             }
         }
     });
@@ -45,6 +46,7 @@ function getMusic(songRequest) {
             for (var i = 0; i < spotifyData.length; i ++) {
                 var musicData = (spacer + "\nArtist: " + spotifyData[i].artists[0].name + "\nSong: " + spotifyData[i].name + "\nPreview URL: " + spotifyData[i].preview_url + "\nAlbum: " + spotifyData[i].album.name + spacer);
                 console.log(musicData);
+                appendLog(musicData);
             }
         }  
     })
@@ -55,6 +57,7 @@ function getMovie() {
     var movieTitle = process.argv[3];
     if (!movieTitle) {
         movieTitle = "Firefly";
+        appendLog(movieTitle);
     }
 
     // Removing spaces of movie/tv Show search to return correctly formatted requests for API call
@@ -77,6 +80,7 @@ function getMovie() {
             var mLanguage = ("\nLanguage:  " + movieData.Language);
             var mData = (spacer + mTitle + mDirector + mWriter + mYear + mPlot + mActors + mIMDBRating + mTomatometer + mCountry + mLanguage + spacer);
             console.log(mData);
+            appendLog(mData);
         }
     })
 };
@@ -90,12 +94,14 @@ function dothething() {
             var randArray = data.split(",");
             liriArgument = randArray[1];
             getMusic(liriArgument);
+            appendLog(liriArgument);
         }
     })
 };
 
+// Append data to log.txt file
 function appendLog (dataLog) {
-    fs.appendFile("mrandom.txt", dataLog, function (error) {
+    fs.appendFile("log.txt", dataLog, function (error) {
         if (error) {
             throw err;
             return console.log('Error occurred: ' + error)
