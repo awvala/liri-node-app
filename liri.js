@@ -1,6 +1,7 @@
 // Require the following NPM modules
 require("dotenv").config();
 const keys = require("./keys.js");
+const inquirer = require('inquirer');
 const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 const request = require('request');
@@ -12,6 +13,7 @@ const client = new Twitter(keys.twitter);
 var command = process.argv;
 var liriCommand = command[2];
 var liriArgument = command[3];
+var spacer = "\n==============";
 
 // Node functions
 function getTweets() {
@@ -26,8 +28,8 @@ function getTweets() {
             console.log(err);
         } else {
             for (var i = 0; i <tweet.length; i ++) {
-                console.log("\n" + "Created: " + tweet[i].created_at + "\n" + "Brilliant Observation:  " + tweet[i].text + "\n");
-                console.log("==============");
+                var tweetData = ("\n" + "Created: " + tweet[i].created_at + "\n" + "Brilliant Observation:  " + tweet[i].text + "\n" + spacer);
+                console.log(tweetData);
             }
         }
     });
@@ -41,11 +43,8 @@ function getMusic(songRequest) {
         } else {
             var spotifyData = data.tracks.items;
             for (var i = 0; i < spotifyData.length; i ++) {
-                console.log("\n" + "Artist: " + spotifyData[i].artists[0].name);
-                console.log("Song: " + spotifyData[i].name);
-                console.log("Preview URL: " + spotifyData[i].preview_url);
-                console.log("Album: " + spotifyData[i].album.name);
-                console.log("==============");
+                var musicData = (spacer + "\nArtist: " + spotifyData[i].artists[0].name + "\nSong: " + spotifyData[i].name + "\nPreview URL: " + spotifyData[i].preview_url + "\nAlbum: " + spotifyData[i].album.name + spacer);
+                console.log(musicData);
             }
         }  
     })
@@ -54,7 +53,6 @@ function getMusic(songRequest) {
 // OMDB requests
 function getMovie() {
     var movieTitle = process.argv[3];
-
     if (!movieTitle) {
         movieTitle = "Firefly";
     }
@@ -67,16 +65,18 @@ function getMovie() {
             return console.log('Error occurred: ' + error);
         } else {
             var movieData = JSON.parse(body);
-            console.log("Title:  " + movieData.Title);
-            console.log("Director:  " + movieData.Director);
-            console.log("Writer:  " + movieData.Writer);
-            console.log("Year:  " + movieData.Year);
-            console.log("Plot:  " + movieData.Plot);
-            console.log("Actors:  " + movieData.Actors);
-            console.log("IMDB Rating:  " + movieData.imdbRating);
-            console.log("Tomatometer:  " + movieData.tomatoMeter);
-            console.log("Country of origin:  " + movieData.Country);
-            console.log("Language:  " + movieData.Language);
+            var mTitle = ("\nTitle:  " + movieData.Title);
+            var mDirector = ("\nDirector:  " + movieData.Director);
+            var mWriter = ("\nWriter:  " + movieData.Writer);
+            var mYear = ("\nYear:  " + movieData.Year);
+            var mPlot = ("\nPlot:  " + movieData.Plot);
+            var mActors = ("\nActors:  " + movieData.Actors);
+            var mIMDBRating = ("\nIMDB Rating:  " + movieData.imdbRating);
+            var mTomatometer = ("\nTomatometer:  " + movieData.tomatoMeter);
+            var mCountry = ("\nCountry of origin:  " + movieData.Country);
+            var mLanguage = ("\nLanguage:  " + movieData.Language);
+            var mData = (spacer + mTitle + mDirector + mWriter + mYear + mPlot + mActors + mIMDBRating + mTomatometer + mCountry + mLanguage + spacer);
+            console.log(mData);
         }
     })
 };
@@ -92,6 +92,17 @@ function dothething() {
             getMusic(liriArgument);
         }
     })
+};
+
+function appendLog (dataLog) {
+    fs.appendFile("mrandom.txt", dataLog, function (error) {
+        if (error) {
+            throw err;
+            return console.log('Error occurred: ' + error)
+        } else {
+            console.log(dataLog);
+        }
+      });
 };
 
 // Determine which function to run
