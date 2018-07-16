@@ -78,7 +78,7 @@ function getMovie() {
             var mTomatometer = ("\nTomatometer:  " + movieData.tomatoMeter);
             var mCountry = ("\nCountry of origin:  " + movieData.Country);
             var mLanguage = ("\nLanguage:  " + movieData.Language);
-            var mData = (spacer + mTitle + mDirector + mWriter + mYear + mPlot + mActors + mIMDBRating + mTomatometer + mCountry + mLanguage + spacer);
+            var mData = ("\n" +spacer + mTitle + mDirector + mWriter + mYear + mPlot + mActors + mIMDBRating + mTomatometer + mCountry + mLanguage + spacer);
             console.log(mData);
             appendLog(mData);
         }
@@ -105,9 +105,7 @@ function appendLog (dataLog) {
         if (error) {
             throw err;
             return console.log('Error occurred: ' + error)
-        } else {
-            console.log(dataLog);
-        }
+        } 
       });
 };
 
